@@ -27,7 +27,10 @@ const parentSchema = new Schema(
             type: String,
             // required: true
         },
-        children: [userSchema]
+        children: {
+            type: [Schema.Types.ObjectId],
+            ref: 'User'
+        }
     },
     { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
@@ -42,7 +45,7 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            select: false,
+            // select: false,
             required: true,
         },
         role: {
@@ -88,20 +91,22 @@ const userSchema = new Schema(
         }
     },
     { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+
 )
 
-userSchema.virtual('age').get(() => {
+userSchema.virtual('age').get(function () {
     const today = new Date();
-    const { dateOfBirth } = this;
+
+    const dateOfBirth = this.dateOfBirth;
 
     const diff = today.getTime() - dateOfBirth.getTime();
     // convert ms to year and return
     return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 });
 
-userSchema.virtual('fullName').get(() => {
-    return `${this.firstName} ${this.middleName} ${this.lastName}`
-});
+userSchema.virtual('fullName')
+    .get(function () {
+        return `${this.firstName} ${this.middleName} ${this.lastName}`;
+    })
 
 module.exports = mongoose.model('User', userSchema);
-module.exports = mongoose.model('Parent', parentSchema);

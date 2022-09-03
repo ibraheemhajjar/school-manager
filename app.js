@@ -24,7 +24,8 @@ const sessionStore = new MongoDBSessionStore({
     collection: 'sessions',
     maxAge: 14 * 24 * 60 * 60 * 1000 // session age in mongodb store is 14 days converted to milliseconds
 })
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(session({
     secret: SECRET,
     resave: false,
