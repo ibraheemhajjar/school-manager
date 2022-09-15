@@ -3,47 +3,40 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const session = require('express-session')
-const MongoDBSessionStore = require('connect-mongodb-session')(session);
 
 //local imports
-const parentRoutes = require('./routes/parent');
-const teacherRoutes = require('./routes/teacher');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const courseRoutes = require('./routes/course');
+const classRoutes = require('./routes/class');
 const logger = require('./utils/logger');
 
 //environment variables
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const DB_URI = process.env.DB_URI;
-const SECRET = process.env.SECRET;
 
 //main application
 const app = express();
-const sessionStore = new MongoDBSessionStore({
-    uri: DB_URI,
-    collection: 'sessions',
-    maxAge: 14 * 24 * 60 * 60 * 1000 // session age in mongodb store is 14 days converted to milliseconds
-})
-// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(session({
-    secret: SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 14 * 24 * 60 * 60 * 1000, // session age is 14 days converted to milliseconds
-    },
-    store: sessionStore
-}))
+
+// enabeling cross-origin resources
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization');
+    next();
+})
 
 //routes
-app.use('/parent', parentRoutes);
-app.use('/teacher', teacherRoutes);
-app.use(authRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/courses', courseRoutes);
+app.use('/classes', classRoutes);
 
-//non existing routes handling
-app.use((req, res, next) => {
-    res.status(404).json("page not found")
+// error handler
+app.use((err, req, res, next) => {
+    logger.error(err);
+    res.status(err.statusCode).json({ message: 'an error occurred', err });
 })
 
 //database connection

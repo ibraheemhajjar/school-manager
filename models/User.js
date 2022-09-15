@@ -1,40 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const parentSchema = new Schema(
-    {
-        email: {
-            type: String,
-            unique: true,
-            // required: true,
-            maxlength: 100,
-        },
-        firstName: {
-            type: String,
-            // required: true,
-            maxlength: 50,
-        },
-        lastName: {
-            type: String,
-            // required: true,
-            maxlength: 50,
-        },
-        address: {
-            type: String,
-            // required: true
-        },
-        phoneNumber: {
-            type: String,
-            // required: true
-        },
-        children: {
-            type: [Schema.Types.ObjectId],
-            ref: 'User'
-        }
-    },
-    { toJSON: { virtuals: true }, toObject: { virtuals: true } }
-)
-
 const userSchema = new Schema(
     {
         email: {
@@ -45,49 +11,66 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            // select: false,
             required: true,
         },
         role: {
             type: String,
-            enum: ['admin', 'teacher', 'student'],
+            enum: ['superAdmin', 'admin', 'teacher', 'student'],
             default: 'student',
+            required: true
         },
         identityNumber: {
             type: String,
-            // required: true
+            required: true
         },
         firstName: {
             type: String,
-            // required: true,
+            required: true,
             maxlength: 50,
         },
         middleName: {
             type: String,
-            // required: true,
+            required: true,
             maxlength: 50,
         },
         lastName: {
             type: String,
-            // required: true,
+            required: true,
             maxlength: 50,
         },
         dateOfBirth: {
             type: Date,
-            // required: true,
+            required: true,
         },
         address: {
             type: String,
-            // required: true
+            required: true
         },
         phoneNumber: {
             type: String,
-            // required: true
+            required: true
         },
-        parents: [parentSchema],
-        courses: {
+        parentEmail: {
+            type: String,
+            required: true,
+            maxlength: 100,
+        },
+        parentPhoneNumber: {
+            type: String,
+            required: true,
+        },
+
+        class: {
             type: Schema.Types.ObjectId,
+            ref: 'Class'
+        },
+        courses: {
+            type: [Schema.Types.ObjectId],
             ref: 'Course'
+        },
+        schoolName: {
+            type: String,
+            required: true
         }
     },
     { toJSON: { virtuals: true }, toObject: { virtuals: true } }
