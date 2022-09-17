@@ -7,16 +7,16 @@ const isAuth = require('../middleware/is-auth')
 // "student" users routes
 router.get('/students', isAuth, userControllers.getAllStudents);
 router.get('/students/:id', isAuth, userControllers.getStudentById);
-router.get('/students/filter', isAuth, userControllers.filterStudents);
+router.get('/filterStudents', isAuth, userControllers.filterStudents);
 router.post('/students/addStudent', isAuth, userControllers.addStudent);
-// router.put('/students/edit/:id', userControllers.editStudent);
-// router.delete('/students/deleteStudent/:id', userControllers.deleteStudent);
+router.put('/students/edit/:id', isAuth, userControllers.editStudent);
+router.delete('/students/deleteStudent/:id', isAuth, userControllers.deleteStudent);
 // "student" users routes
-// router.get('/teachers', userControllers.getAllTeachers);
-// router.get('/teachers/:id', userControllers.getTeacherById);
-// router.get('/teachers/filter', userControllers.filterTeachers);
-// router.post('/teachers/addTeacher', userControllers.addTeacher);
-// router.put('/teachers/edit/:id', userControllers.editTeacher);
-// router.delete('/teachers/deleteTeacher/:id', userControllers.deleteTeacher);
+router.get('/teachers', isAuth, userControllers.getAllTeachers);
+router.get('/teachers/:id', isAuth, userControllers.getTeacherById);
+router.get('/filterTeachers', isAuth, userControllers.filterTeachers);
+router.post('/teachers/addTeacher', isAuth, userControllers.addTeacher);
+router.put('/teachers/edit/:id', isAuth, userControllers.editTeacher);
+router.delete('/teachers/deleteTeacher/:id', isAuth, userControllers.deleteTeacher);
 
 module.exports = router;

@@ -87,9 +87,36 @@ userSchema.virtual('age').get(function () {
     return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 });
 
-userSchema.virtual('fullName')
-    .get(function () {
-        return `${this.firstName} ${this.middleName} ${this.lastName}`;
-    })
+userSchema.virtual('fullName').get(function () {
+    return `${this.firstName} ${this.middleName} ${this.lastName}`;
+})
+
+// marks: {
+//     firstExam: {
+//         type: Number,
+//         min: 0,
+//         max: 20
+//     },
+//     secondExam: {
+//         type: Number,
+//         min: 0,
+//         max: 20
+//     },
+//     thirdExam: {
+//         type: Number,
+//         min: 0,
+//         max: 20
+//     },
+//     finalExam: {
+//         type: Number,
+//         min: 0,
+//         max: 40
+//     },
+//     total: {
+//         type: Number,
+//         min: 0,
+//         max: 100
+//     }
+// }
 
 module.exports = mongoose.model('User', userSchema);

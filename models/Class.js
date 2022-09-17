@@ -3,13 +3,22 @@ const Schema = mongoose.Schema;
 
 const classSchema = new Schema(
     {
+        className: {
+            type: String,
+            unique: true,
+            required: true
+        },
+        schoolName: {
+            type: String,
+            required: true
+        },
         classGrade: {
             type: String,
             required: true
         },
         classRoom: {
             floor: {
-                type: String,
+                type: Number,
                 required: true
             },
             roomNumber: {
