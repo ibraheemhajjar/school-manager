@@ -1,8 +1,7 @@
 const User = require('../models/User');
-const resHandler = require('../middleware/resHandler');
+const resHandler = require('../middleware/res-handler');
 const nameFormatter = require('../utils/name-formatter');
 const bcrypt = require('bcrypt');
-
 const userControllers = {};
 
 userControllers.getAllStudents = async (req, res, next) => {

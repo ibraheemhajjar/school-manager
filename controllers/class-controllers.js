@@ -1,5 +1,5 @@
 const Class = require('../models/Class');
-const resHandler = require('../middleware/resHandler');
+const resHandler = require('../middleware/res-handler');
 
 const classControllers = {};
 

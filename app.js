@@ -10,6 +10,7 @@ const userRoutes = require('./routes/user');
 const courseRoutes = require('./routes/course');
 const classRoutes = require('./routes/class');
 const logger = require('./utils/logger');
+const errorHandler = require('./middleware/error-handler');
 
 //environment variables
 const port = process.env.PORT || 3000;
@@ -34,10 +35,7 @@ app.use('/courses', courseRoutes);
 app.use('/classes', classRoutes);
 
 // error handler
-app.use((err, req, res, next) => {
-    logger.error(err);
-    res.status(err.statusCode).json({ message: 'an error occurred', err });
-})
+app.use(errorHandler);
 
 //database connection
 mongoose.connect(DB_URI, () => {
