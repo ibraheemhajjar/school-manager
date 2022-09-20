@@ -158,6 +158,30 @@ userControllers.deleteStudent = async (req, res, next) => {
     }
 }
 
+userControllers.addCourse = async (req, res, next) => {
+    const userRole = req.userRole
+    const studentId = req.params.studentId;
+    const courseId = req.params.courseId;
+    try {
+        const student = await User.findById(studentId);
+        if (!student) {
+            const error = new Error();
+            error.message = 'student not found, failed to add course';
+            error.statusCode = 500;
+            return next(error);
+        }
+        student.courses.push(courseId);
+        await student.save();
+        res.data = student;
+        res.message = 'added successfully!';
+        resHandler(null, req, res, next);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// teacher users controllers
+
 userControllers.getAllTeachers = async (req, res, next) => {
     const userRole = req.userRole;
     try {
@@ -305,5 +329,26 @@ userControllers.deleteTeacher = async (req, res, next) => {
     }
 }
 
+userControllers.addCourseToTeacher = async (req, res, next) => {
+    const userRole = req.userRole
+    const teacherId = req.params.teacherId;
+    const courseId = req.params.courseId;
+    try {
+        const teacher = await User.findById(teacherId);
+        if (!teacher) {
+            const error = new Error();
+            error.message = 'teacher not found, failed to add course';
+            error.statusCode = 500;
+            return next(error);
+        }
+        teacher.courses.push(courseId);
+        await teacher.save();
+        res.data = teacher;
+        res.message = 'added successfully!';
+        resHandler(null, req, res, next);
+    } catch (err) {
+        throw err;
+    }
+}
 
 module.exports = userControllers

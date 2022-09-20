@@ -10,5 +10,6 @@ router.get('/filter', isAuth, classControllers.filterClasses);
 router.post('/addClass', isAuth, classControllers.addClass);
 router.put('/editClass/:id', isAuth, classControllers.editClass);
 router.delete('/deleteClass/:id', isAuth, classControllers.deleteClass);
+router.post('/:classId/addStudent/:studentId', isAuth, classControllers.addStudent);
 
 module.exports = router;

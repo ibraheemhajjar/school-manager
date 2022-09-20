@@ -134,4 +134,27 @@ classControllers.deleteClass = async (req, res, next) => {
     }
 }
 
+classControllers.addStudent = async (req, res, next) => {
+    const userRole = req.userRole
+    const classId = req.params.classId;
+    const studentId = req.params.studentId;
+    try {
+        const theClass = await Class.findById(classId);
+        if (!theClass) {
+            const error = new Error();
+            error.message = 'class not found, failed to add student';
+            error.statusCode = 500;
+            return next(error);
+        }
+        theClass.students.push(studentId);
+        await theClass.save();
+        res.data = theClass;
+        res.message = 'added successfully!';
+        resHandler(null, req, res, next);
+    } catch (err) {
+        throw err;
+    }
+}
+
+
 module.exports = classControllers;
