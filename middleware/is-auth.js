@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
 
     let decodedToken;
-    const AuthHeaderToken = req.get('Authorization');
+    const AuthHeaderToken = req.get('Authorization').split(' ')[1];
     if (!AuthHeaderToken) {
         const error = new Error();
         error.message = 'Not Authenticated'
