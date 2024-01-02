@@ -1,12 +1,12 @@
 const News = require('../models/News');
 const resHandler = require('../middleware/res-handler');
 const NEWS_CATEGORIES_IDS = require("../constants/index");
+
 const newsControllers = {};
 
 newsControllers.getAllNews = async (req, res, next) => {
      try {
           const news = await News.find({})
-          // .limit(20);
           if (!news) {
                const error = new Error();
                error.message = 'failed to fetch news';
@@ -74,6 +74,28 @@ newsControllers.getCustomNews = async (req, res, next) => {
                return next(error);
           }
           res.data = customNews
+          resHandler(null, req, res, next);
+     } catch (err) {
+          next(err)
+     }
+}
+
+newsControllers.searchNews = async (req, res, next) => {
+     const searchQuery = req.query?.searchQuery;
+     try {
+          const searchResult = await News.find({
+               "$or": [
+                    { "title": { "$regex": searchQuery, "$options": "i" } },
+                    { "description": { "$regex": searchQuery, "$options": "i" } }
+               ]
+          })
+          if (!searchResult) {
+               const error = new Error();
+               error.message = 'failed to search news';
+               error.statusCode = 500;
+               return next(error);
+          }
+          res.data = searchResult
           resHandler(null, req, res, next);
      } catch (err) {
           next(err)
