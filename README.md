@@ -1,2 +1,2 @@
-# school-manager
-school manager application
+# TRT-news demo
+demo application for trt news website
