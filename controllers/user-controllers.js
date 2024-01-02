@@ -81,7 +81,7 @@ newsControllers.getCustomNews = async (req, res, next) => {
 }
 
 newsControllers.searchNews = async (req, res, next) => {
-     const searchQuery = req.query?.searchQuery;
+     const searchQuery = " " + req.query?.searchQuery + " ";
      try {
           const searchResult = await News.find({
                "$or": [
@@ -103,5 +103,3 @@ newsControllers.searchNews = async (req, res, next) => {
 }
 
 module.exports = newsControllers;
-
-
