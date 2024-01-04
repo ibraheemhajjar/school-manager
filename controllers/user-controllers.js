@@ -4,6 +4,11 @@ const NEWS_CATEGORIES_IDS = require("../constants/index");
 
 const newsControllers = {};
 
+newsControllers.homeController = async (req, res, next) => {
+     res.data = "Hello to the TRT-Server App"
+     resHandler(null, req, res, next);
+}
+
 newsControllers.getAllNews = async (req, res, next) => {
      try {
           const news = await News.find({})

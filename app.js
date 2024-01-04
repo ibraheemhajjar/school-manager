@@ -18,14 +18,14 @@ app.use(express.json());
 
 // enabling cross-origin resources
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization');
-    next();
+     res.setHeader('Access-Control-Allow-Origin', '*');
+     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+     res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization');
+     next();
 })
 
 //routes
-app.use('/news', newsRoutes);
+app.use('/', newsRoutes);
 
 // error handler
 app.use(errorHandler);
@@ -33,11 +33,11 @@ app.use(errorHandler);
 //database connection
 mongoose.connect(DB_URI, () => {
 
-    logger.info('database connected successfully!')
+     logger.info('database connected successfully!')
 
-    app.listen(port, () => {
-        logger.info(`server started at port: ${port}`);
-    })
+     app.listen(port, () => {
+          logger.info(`server started at port: ${port}`);
+     })
 
 });
 
