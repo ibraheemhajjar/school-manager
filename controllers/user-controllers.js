@@ -5,7 +5,7 @@ const NEWS_CATEGORIES_IDS = require("../constants/index");
 const newsControllers = {};
 
 newsControllers.homeController = async (req, res, next) => {
-     res.data = "Hello to the TRT-Server App"
+     res.data = "Welcome to the TRT-Server Demo App"
      resHandler(null, req, res, next);
 }
 
