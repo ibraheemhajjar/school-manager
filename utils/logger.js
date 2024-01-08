@@ -12,15 +12,15 @@ const logger = pino({
                          ignore: 'pid,hostname',
                     },
                },
-               {
-                    level: 'error',
-                    target: 'pino/file',
-                    options: {
-                         translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
-                         ignore: 'pid,hostname',
-                         destination: `${__dirname}/../server-log.log`,
-                    },
-               },
+               // {
+               //      level: 'error',
+               //      target: 'pino/file',
+               //      options: {
+               //           translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+               //           ignore: 'pid,hostname',
+               //           destination: `${__dirname}/../server-log.log`,
+               //      },
+               // },
           ],
      }
 
